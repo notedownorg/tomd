@@ -23,6 +23,7 @@ librosa = "0.10.2.post1"
 numba = "0.61.0"
 mdformat = "0.7.22"
 markdownify = "0.14.1"
+transformers = "4.45.2"
 
 [tool.pyright]
 venvPath = "."
