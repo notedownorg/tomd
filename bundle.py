@@ -28,7 +28,6 @@ def bundle():
             "--name",
             "tomd",
             "--noconfirm",
-
             "--hidden-import",
             "pydantic.deprecated.decorator",
             "--hidden-import",
@@ -43,7 +42,6 @@ def bundle():
             "skops.io.old._numpy_v0",
             "--hidden-import",
             "skops.io.old._numpy_v1",
-
             "--copy-metadata",
             "tqdm",
             "--copy-metadata",
