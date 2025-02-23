@@ -47,6 +47,8 @@ def bundle():
             "sklearn.metrics._pairwise_distances_reduction._datasets_pair",
             "--hidden-import",
             "sklearn.metrics._pairwise_distances_reduction._middle_term_computer",
+            "--hidden-import",
+            "pandas._libs.tslibs.base",
             # Metadata required by transformers
             # See https://github.com/huggingface/transformers/blob/v4.45.2/src/transformers/dependency_versions_check.py#L25
             "--copy-metadata",
