@@ -28,6 +28,7 @@ def bundle():
             "--name",
             "tomd",
             "--noconfirm",
+            # Imports that are not automatically detected
             "--hidden-import",
             "pydantic.deprecated.decorator",
             "--hidden-import",
@@ -42,6 +43,10 @@ def bundle():
             "skops.io.old._numpy_v0",
             "--hidden-import",
             "skops.io.old._numpy_v1",
+            "--hidden-import",
+            "sklearn.metrics._pairwise_distances_reduction._datasets_pair",
+            # Metadata required by transformers
+            # See https://github.com/huggingface/transformers/blob/v4.45.2/src/transformers/dependency_versions_check.py#L25
             "--copy-metadata",
             "tqdm",
             "--copy-metadata",
