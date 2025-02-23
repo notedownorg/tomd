@@ -45,6 +45,8 @@ def bundle():
             "skops.io.old._numpy_v1",
             "--hidden-import",
             "sklearn.metrics._pairwise_distances_reduction._datasets_pair",
+            "--hidden-import",
+            "sklearn.metrics._pairwise_distances_reduction._middle_term_computer",
             # Metadata required by transformers
             # See https://github.com/huggingface/transformers/blob/v4.45.2/src/transformers/dependency_versions_check.py#L25
             "--copy-metadata",
