@@ -17,6 +17,6 @@ Once more stable there will be actual releases but right now you need to clone t
 Run the command to extract Markdown from the passed source and print it to `stdout`.
 
 ```sh 
-tomd "https://brooker.co.za/blog/2023/09/21/audience.HTML" # text/html
+tomd "https://brooker.co.za/blog/2023/09/21/audience.html" # text/html
 tomd "https://youtu.be/B0yAy2j-9V0" # YouTube
 ```

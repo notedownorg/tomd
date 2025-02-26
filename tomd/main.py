@@ -16,10 +16,12 @@ import click, warnings, sys, mdformat, os
 from pathlib import Path
 from contextlib import redirect_stdout
 from .cache import FileSystemKV
+from .frontmatter import extract_metadata, add_front_matter
+from .config import USER_AGENT
 
-os.environ["USER_AGENT"] = (
-    "tomd"  # set before importing langchain things otherwise we get a warning
-)
+# Set environment variable for langchain
+os.environ["USER_AGENT"] = USER_AGENT
+
 from .youtube import extract_youtube_transcription
 from .article import extract_article_remote
 from .split import split
@@ -38,9 +40,17 @@ warnings.filterwarnings("ignore")
 )
 def extract(url: str, disable_cache: bool):
     """
-    Extracts content as Markdown from a URL and prints it to stdout.
+    Extract web content as Markdown from a URL and print to stdout.
 
-    Assumes text content by default but supports YouTube videos.
+    Automatically detects and handles different content types:
+    - YouTube videos: Extracts and formats video transcription
+    - Web articles: Extracts main article content
+
+    Results are cached locally for faster repeat access. Use --disable-cache to force
+    fresh extraction.
+
+    The output includes YAML frontmatter with metadata like title, source URL and
+    extraction date.
     """
 
     content = ""
@@ -68,8 +78,15 @@ def extract(url: str, disable_cache: bool):
                 )
                 content = extract_article_remote(url)
 
+        # Format content
         content = mdformat.text(content)
-        cache.set(url, content)
+
+        # Create metadata and add front matter
+        metadata = extract_metadata(url)
+        content_with_front_matter = add_front_matter(content, metadata)
+
+        # Cache the result
+        cache.set(url, content_with_front_matter)
 
     with redirect_stdout(sys.stdout):
-        click.echo(content)
+        click.echo(content_with_front_matter)
