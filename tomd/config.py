@@ -12,28 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.PHONY: clean build format licenser install
+"""
+Configuration settings for tomd.
+"""
 
-hygiene: licenser format
+# Version information
+try:
+    from importlib.metadata import version
 
-dirty:
-	git diff --exit-code
+    VERSION = version("tomd")
+except ImportError:  # Fallback for PyInstaller bundle
+    VERSION = "0.1.0"  # This will be replaced during build
 
-licenser:
-	nix develop --command licenser apply -r "Notedown Authors"
+# HTTP request settings
+USER_AGENT = f"tomd/{VERSION}"
 
-format:
-	nix develop --command poetry lock
-	nix develop --command black .
-
-clean:
-	rm -rf build __pycache__ dist
-
-build:
-	nix develop --command poetry install
-	nix develop --command poetry run bundle
-	chmod +x dist/tomd/tomd
-
-install: build
-	sudo rm -rf /usr/local/bin/tomd*
-	sudo cp -r dist/tomd/* /usr/local/bin
+# Default HTTP headers for all requests
+DEFAULT_HEADERS = {"User-Agent": USER_AGENT}
